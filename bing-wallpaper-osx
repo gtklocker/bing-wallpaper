@@ -11,7 +11,7 @@ end tell
 END"""
 
 def set_desktop_background(filename):
-    subprocess.Popen(SCRIPT % filename, shell=True)
+    subprocess.call(SCRIPT % filename, shell=True)
 
 BASE_BING_URL = "https://www.bing.com"
 BING_WP_API_URL = BASE_BING_URL + "/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US"
