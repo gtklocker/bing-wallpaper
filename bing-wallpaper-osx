@@ -18,11 +18,11 @@ def set_desktop_background(filename):
 
 
 def bing_wallpaper_url() -> str:
-    bing_base = "https://www.bing.com"
-    market = "ja-JP"
-    bing_api = "%s/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=%s" % (bing_base, market)
+    bing_base, market = "https://www.bing.com", "ja-JP"
+    bing_api = f"{bing_base}/HPImageArchive.aspx?format=js&idx=0&n=1&mkt={market}"
     response = json.load(urllib.request.urlopen(bing_api))
-    return "%s%s%s" % (bing_base, response["images"][0]["urlbase"], "_UHD.jpg")
+    img_base = response["images"][0]["urlbase"]
+    return f"{bing_base}{img_base}_UHD.jpg"
 
 
 wallpaper_filename, _ = urllib.request.urlretrieve(bing_wallpaper_url())
