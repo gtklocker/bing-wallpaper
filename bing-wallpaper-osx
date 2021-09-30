@@ -14,7 +14,8 @@ def set_desktop_background(filename):
     subprocess.call(SCRIPT % filename, shell=True)
 
 BASE_BING_URL = "https://www.bing.com"
-BING_WP_API_URL = BASE_BING_URL + "/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=en-US"
+market = "ja-JP"
+BING_WP_API_URL = "%s/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=%s" % (BASE_BING_URL, market)
 
 response = json.loads(urllib.urlopen(BING_WP_API_URL).read())
 wallpaper_url = "%s%s%s" % (BASE_BING_URL, response["images"][0]["urlbase"], "_UHD.jpg")
