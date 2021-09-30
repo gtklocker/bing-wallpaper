@@ -14,7 +14,7 @@ def set_desktop_background(filename):
             ]
         )
     ).encode("utf-8")
-    subprocess.run("/usr/bin/osascript", input=osascript_stdin)
+    subprocess.run("/usr/bin/osascript", input=osascript_stdin).check_returncode()
 
 
 def bing_wallpaper_url() -> str:
