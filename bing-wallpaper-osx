@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-import urllib
+#!/usr/bin/env python3
+import urllib.request
 import json
 import tempfile
 import subprocess
@@ -13,14 +13,12 @@ END"""
 def set_desktop_background(filename):
     subprocess.call(wallpaper_change_script % filename, shell=True)
 
-bing_base = "https://www.bing.com"
-market = "ja-JP"
-bing_api = "%s/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=%s" % (bing_base, market)
+def bing_wallpaper_url():
+    bing_base = "https://www.bing.com"
+    market = "ja-JP"
+    bing_api = "%s/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=%s" % (bing_base, market)
+    response = json.load(urllib.request.urlopen(bing_api))
+    return "%s%s%s" % (bing_base, response["images"][0]["urlbase"], "_UHD.jpg")
 
-response = json.loads(urllib.urlopen(bing_api).read())
-wallpaper_url = "%s%s%s" % (bing_base, response["images"][0]["urlbase"], "_UHD.jpg")
-
-wallpaper_file = tempfile.NamedTemporaryFile(delete=False)
-wallpaper_file.write(urllib.urlopen(wallpaper_url).read())
-wallpaper_file.close()
-set_desktop_background(wallpaper_file.name)
+wallpaper_filename, _ = urllib.request.urlretrieve(bing_wallpaper_url())
+set_desktop_background(wallpaper_filename)
