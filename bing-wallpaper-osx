@@ -21,5 +21,5 @@ wallpaper_url = "%s%s%s" % (BASE_BING_URL, response["images"][0]["urlbase"], "_U
 
 wallpaper_file = tempfile.NamedTemporaryFile(delete=False)
 wallpaper_file.write(urllib.urlopen(wallpaper_url).read())
-set_desktop_background(wallpaper_file.name)
 wallpaper_file.close()
+set_desktop_background(wallpaper_file.name)
