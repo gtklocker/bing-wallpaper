@@ -4,21 +4,21 @@ import json
 import tempfile
 import subprocess
 
-SCRIPT = """/usr/bin/osascript<<END
+wallpaper_change_script = """/usr/bin/osascript<<END
 tell application "Finder"
 set desktop picture to POSIX file "%s"
 end tell
 END"""
 
 def set_desktop_background(filename):
-    subprocess.call(SCRIPT % filename, shell=True)
+    subprocess.call(wallpaper_change_script % filename, shell=True)
 
-BASE_BING_URL = "https://www.bing.com"
+bing_base = "https://www.bing.com"
 market = "ja-JP"
-BING_WP_API_URL = "%s/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=%s" % (BASE_BING_URL, market)
+bing_api = "%s/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=%s" % (bing_base, market)
 
-response = json.loads(urllib.urlopen(BING_WP_API_URL).read())
-wallpaper_url = "%s%s%s" % (BASE_BING_URL, response["images"][0]["urlbase"], "_UHD.jpg")
+response = json.loads(urllib.urlopen(bing_api).read())
+wallpaper_url = "%s%s%s" % (bing_base, response["images"][0]["urlbase"], "_UHD.jpg")
 
 wallpaper_file = tempfile.NamedTemporaryFile(delete=False)
 wallpaper_file.write(urllib.urlopen(wallpaper_url).read())
