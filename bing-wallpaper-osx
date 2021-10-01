@@ -2,9 +2,10 @@
 import urllib.request
 import json
 import subprocess
+import shutil
 
 
-def set_desktop_background(filename):
+def set_background_osascript(filename):
     osascript_stdin = (
         "\n".join(
             [
@@ -14,7 +15,23 @@ def set_desktop_background(filename):
             ]
         )
     ).encode("utf-8")
-    subprocess.run("/usr/bin/osascript", input=osascript_stdin).check_returncode()
+    subprocess.run("osascript", input=osascript_stdin).check_returncode()
+
+
+def set_background_feh(filename):
+    subprocess.run(["feh", "--bg-fill", filename]).check_returncode()
+
+
+def set_background(filename):
+    background_commands_supported = {
+        "osascript": set_background_osascript,
+        "feh": set_background_feh,
+    }
+
+    for cmd, fn in background_commands_supported.items():
+        if shutil.which(cmd):
+            fn(filename)
+            break
 
 
 def bing_wallpaper_url() -> str:
@@ -26,4 +43,4 @@ def bing_wallpaper_url() -> str:
 
 
 wallpaper_filename, _ = urllib.request.urlretrieve(bing_wallpaper_url())
-set_desktop_background(wallpaper_filename)
+set_background(wallpaper_filename)
