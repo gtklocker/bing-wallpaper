@@ -10,13 +10,13 @@ import hashlib
 # TODO: use xdg, but we don't wanna rely on an external library now
 cache_dir = os.path.expanduser("~/.cache/bing-wallpaper/")
 
+
 def set_background_osascript(filename):
     osascript_stdin = (
-        "\n".join(
+        " ".join(
             [
-                'tell application "Finder"',
-                f'set desktop picture to POSIX file "{filename}"',
-                "end tell",
+                'tell application "System Events"',
+                f'to tell every desktop to set picture to "{filename}" as POSIX file',
             ]
         )
     ).encode("utf-8")
