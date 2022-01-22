@@ -42,5 +42,7 @@ def bing_wallpaper_url() -> str:
     return f"{bing_base}{img_base}_UHD.jpg"
 
 
-wallpaper_filename, _ = urllib.request.urlretrieve(bing_wallpaper_url())
+url = bing_wallpaper_url()
+print(f'downloading from {url}')
+wallpaper_filename, _ = urllib.request.urlretrieve(url)
 set_background(wallpaper_filename)
