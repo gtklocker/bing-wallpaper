@@ -48,13 +48,15 @@ def bing_wallpaper_url() -> str:
 
 
 if not os.path.exists(cache_dir):
-    print('creating cache dir')
+    print("creating cache dir")
     os.makedirs(cache_dir)
 
 url = bing_wallpaper_url()
-url_hash = hashlib.sha256(url.encode('ascii')).hexdigest()
+url_hash = hashlib.sha256(url.encode("ascii")).hexdigest()
 wallpaper_path = os.path.join(cache_dir, f"{url_hash}.jpg")
 if not os.path.exists(wallpaper_path):
-    print(f'downloading from {url}')
+    print(f"downloading from {url} to {wallpaper_path}")
     wallpaper_filename, _ = urllib.request.urlretrieve(url, filename=wallpaper_path)
+else:
+    print(f"wallpaper cached in {wallpaper_path}")
 set_background(wallpaper_path)
