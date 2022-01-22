@@ -3,7 +3,12 @@ import urllib.request
 import json
 import subprocess
 import shutil
+import os
+import os.path
+import hashlib
 
+# TODO: use xdg, but we don't wanna rely on an external library now
+cache_dir = os.path.expanduser("~/.cache/bing-wallpaper/")
 
 def set_background_osascript(filename):
     osascript_stdin = (
@@ -42,7 +47,14 @@ def bing_wallpaper_url() -> str:
     return f"{bing_base}{img_base}_UHD.jpg"
 
 
+if not os.path.exists(cache_dir):
+    print('creating cache dir')
+    os.makedirs(cache_dir)
+
 url = bing_wallpaper_url()
-print(f'downloading from {url}')
-wallpaper_filename, _ = urllib.request.urlretrieve(url)
-set_background(wallpaper_filename)
+url_hash = hashlib.sha256(url.encode('ascii')).hexdigest()
+wallpaper_path = os.path.join(cache_dir, f"{url_hash}.jpg")
+if not os.path.exists(wallpaper_path):
+    print(f'downloading from {url}')
+    wallpaper_filename, _ = urllib.request.urlretrieve(url, filename=wallpaper_path)
+set_background(wallpaper_path)
