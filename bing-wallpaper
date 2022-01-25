@@ -58,5 +58,5 @@ if not os.path.exists(wallpaper_path):
     print(f"downloading from {url} to {wallpaper_path}")
     wallpaper_filename, _ = urllib.request.urlretrieve(url, filename=wallpaper_path)
 else:
-    print(f"wallpaper cached in {wallpaper_path}")
+    print(f"wallpaper already cached in {wallpaper_path}")
 set_background(wallpaper_path)
